@@ -1,16 +1,14 @@
-VENV = venv
+VENV = .venv
 PYTHON = $(VENV)/bin/python
-PIP = $(VENV)/bin/pip
+PIP = $(PYTHON) -m pip
 
-.PHONY: all setup install clean
+.PHONY: venv install notebook clean
 
-all: setup install run
+venv:
+	python3 -m venv $(VENV)
 
-setup:
-	@test -d $(VENV) || python3 -m venv $(VENV)
-
-install: setup
-	@$(PIP) install -r requirements.txt
+install: venv
+	$(PIP) install -r requirements.txt
 
 clean:
-	rm -rf $(VENV) __pycache__ *.pyc
+	rm -rf $(VENV)
