@@ -1,20 +1,47 @@
+import numpy as np
+
 def summarize_walk_forward_results(walk_forward_results):
-    """
-    Summarizes average performance metrics across all test years for each model.
-    """
+
     summary = {}
-    
-    for test_year, models in walk_forward_results.items():
+
+    for test_year, feature_results in walk_forward_results.items():
+
+        for feature_name, models in feature_results.items():
+
+            if feature_name not in summary:
+                summary[feature_name] = {}
+
+            for model_name, metrics in models.items():
+
+                if model_name not in summary[feature_name]:
+                    summary[feature_name][model_name] = {
+                        "mse": [],
+                        "mae": []
+                    }
+
+                summary[feature_name][model_name]["mse"].append(
+                    metrics["mse"]
+                )
+
+                summary[feature_name][model_name]["mae"].append(
+                    metrics["mae"]
+                )
+
+    print("\n=== Feature Efficiency Summary ===")
+
+    for feature_name, models in summary.items():
+
+        print(f"\n--- Features: {feature_name} ---")
+
         for model_name, metrics in models.items():
-            if model_name not in summary:
-                summary[model_name] = {"mse_list": [], "mae_list": []}
-            summary[model_name]["mse_list"].append(metrics["mse"])
-            summary[model_name]["mae_list"].append(metrics["mae"])
-            
-    print("\n=== Overall Walk-Forward Summary Across All Test Years ===")
-    for model_name, metrics in summary.items():
-        avg_mse = sum(metrics["mse_list"]) / len(metrics["mse_list"])
-        avg_mae = sum(metrics["mae_list"]) / len(metrics["mae_list"])
-        print(f"Model: {model_name:<18} | Avg MSE: {avg_mse:.4f} | Avg MAE: {avg_mae:.4f}")
-        
+
+            avg_mse = np.mean(metrics["mse"])
+            avg_mae = np.mean(metrics["mae"])
+
+            print(
+                f"{model_name:<18} | "
+                f"Avg MSE: {avg_mse:.4f} | "
+                f"Avg MAE: {avg_mae:.4f}"
+            )
+
     return summary
