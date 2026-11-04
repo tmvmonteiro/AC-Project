@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, VotingRegressor
 from sklearn.linear_model import LinearRegression
+from sklearn.dummy import DummyRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 # --------------------------------------------------
@@ -18,8 +19,15 @@ def calculate_win_loss_ratio(df):
         0.0
     )
 
+def calculate_goal_differential(df):
+    """Calculate the goal differential (Goals For - Goals Against)."""
+    if "GF" in df.columns and "GA" in df.columns:
+        return df["GF"] - df["GA"]
+    return np.zeros(len(df))
+
 FEATURES = {
     "WinLossRatio": calculate_win_loss_ratio,
+    "GoalDifferential": calculate_goal_differential
 }
 
 def engineer_features(df):
@@ -52,8 +60,11 @@ def get_model_pipeline():
         ('gb', gb),
         ('lr', lr)
     ])
+
+    mean_baseline = DummyRegressor(strategy="mean")
     
     models_dict = {
+        "MeanBaseline": mean_baseline,
         "RandomForest": rf,
         "GradientBoosting": gb,
         "LinearRegression": lr,
@@ -64,27 +75,20 @@ def get_model_pipeline():
 
 def walk_forward_train_test(datasets, target_col='rank', window_size=9):
     """
-    Performs non-overlapping walk-forward validation.
-
-    Compares model performance using Features
+    Performs sliding window walk-forward validation with a baseline.
     """
-
-    if 'Teams' not in datasets:
-        raise ValueError("Teams dataset is required for ranking models.")
 
     df = datasets['Teams'].copy()
     df = engineer_features(df)
-
-    if target_col not in df.columns or 'year' not in df.columns:
-        raise ValueError("Target or year column not found.")
 
     df = df.dropna(subset=[target_col, 'year'])
 
     # Feature configurations to compare
     feature_sets = {
-        "WinLossRatio": ['WinLossRatio'],
-        "GoalDifferential": ['GoalDifferential'],
-        "Combined": ['WinLossRatio', 'GoalDifferential']
+        "WinLossRatio": ["WinLossRatio"],
+        "GoalDifferential": ["GoalDifferential"],
+        "GoalDifferential": ["GoalDifferential"],
+        "Combined": ["WinLossRatio", "GoalDifferential"]
     }
 
     # Keep only available features
@@ -96,11 +100,8 @@ def walk_forward_train_test(datasets, target_col='rank', window_size=9):
     models_dict = get_model_pipeline()
     years = sorted(df['year'].unique())
 
-    if len(years) < window_size + 1:
-        raise ValueError("Not enough distinct years for validation.")
-
     all_results = {}
-    step_size = window_size + 1
+    step_size = 1
 
     for i in range(0, len(years) - window_size, step_size):
 
@@ -119,15 +120,9 @@ def walk_forward_train_test(datasets, target_col='rank', window_size=9):
 
         for feature_name, feature_cols in feature_sets.items():
 
-            if not feature_cols:
-                continue
-
             # Remove missing feature values
             train = train_data.dropna(subset=feature_cols + [target_col])
             test = test_data.dropna(subset=feature_cols + [target_col])
-
-            if train.empty or test.empty:
-                continue
 
             X_train = train[feature_cols]
             y_train = train[target_col]
@@ -157,5 +152,20 @@ def walk_forward_train_test(datasets, target_col='rank', window_size=9):
                     f"[{model_name}] "
                     f"MSE: {mse:.4f} | MAE: {mae:.4f}"
                 )
+
+        if 'tmID' in df.columns:
+                prev_year_data = df[df['year'] == test_year - 1].set_index('tmID')[target_col]
+                # Map previous year's rank to test data; fill missing teams with training mean
+                persistence_preds = test['tmID'].map(prev_year_data).fillna(y_train.mean())
+                
+                p_mse = mean_squared_error(y_test, persistence_preds)
+                p_mae = mean_absolute_error(y_test, persistence_preds)
+                
+                all_results[test_year][feature_name]["PersistenceBaseline"] = {
+                    "mse": p_mse,
+                    "mae": p_mae,
+                    "predictions": persistence_preds.values
+                }
+                print(f"[PersistenceBaseline] MSE: {p_mse:.4f} | MAE: {p_mae:.4f}")
 
     return all_results
