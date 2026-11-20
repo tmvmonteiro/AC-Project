@@ -10,8 +10,5 @@ venv:
 install: venv requirements.txt
 	$(PIP) install -r requirements.txt
 
-run: 
-	$(PYTHON) src/machine_learning/main.py
-
 clean:
 	rm -rf $(VENV)

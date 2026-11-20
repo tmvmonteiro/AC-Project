@@ -5,7 +5,3 @@
 ```sh
 make install
 ```
-### Running the script
-```sh
-make run
-```
