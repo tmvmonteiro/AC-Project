@@ -3,6 +3,11 @@ import pandas as pd
 from cleaning import clean_datasets
 from train_ranking import walk_forward_train_test
 from test_ranking import summarize_walk_forward_results
+from feature_engineering import (
+    build_ranking_dataset,
+    get_feature_sets,
+    TARGET_COLUMN
+)
 
 def load_data(folder_path="data/"):
     """
@@ -20,10 +25,14 @@ def load_data(folder_path="data/"):
             datasets[table_name] = pd.read_csv(file_path)
             
     return datasets
-
+    
 def main():
     print("=== Starting Machine Learning Pipeline ===")
-    
+    ranking_data = build_ranking_dataset(
+    cleaned_datasets["Teams"],
+    start_year=1995
+)
+    print(ranking_data.head())
     # Load Data
     print("Loading datasets from 'data/'...")
     datasets = load_data("data/")
