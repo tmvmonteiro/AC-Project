@@ -197,8 +197,15 @@ def build_ranking_dataset(
         validate="one_to_one",
     )
 
-    result["PtsPct_2Y_Avg"] = (result["PtsPct_Lag1"] + result["PtsPct_Lag2"]) / 2.0
-    result["PtsPct_Trend"] = result["PtsPct_Lag1"] - result["PtsPct_Lag2"]
+    # In 2005, the 2004 season is absent (NHL lockout). For derived features,
+    # use the last available season instead of leaving every team with the
+    # same all-NaN inputs. Keep PtsPct_Lag1 itself missing to preserve the
+    # exact-year feature semantics.
+    lag1_fallback = result["PtsPct_Lag1"].fillna(result["PtsPct_Lag2"])
+    result["PtsPct_2Y_Avg"] = (
+        lag1_fallback + result["PtsPct_Lag2"]
+    ) / 2.0
+    result["PtsPct_Trend"] = lag1_fallback - result["PtsPct_Lag2"]
 
     rows_before_history_filter = len(result)
     incomplete_history = result[["PtsPct_Lag1", "PtsPct_Lag2"]].isna().any(axis=1)
