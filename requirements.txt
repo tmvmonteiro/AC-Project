@@ -5,3 +5,8 @@ seaborn
 scikit-learn
 notebook
 ipykernel
+xgboost 
+lightgbm
+catboost 
+statsmodels
+optuna
