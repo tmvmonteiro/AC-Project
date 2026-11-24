@@ -2,13 +2,22 @@ import ast
 import contextlib
 import io
 import json
+import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
+import lightgbm as lgb
 import numpy as np
 import pandas as pd
+import xgboost as xgb
+from catboost import CatBoostRegressor
+from scipy.stats import spearmanr
 from sklearn.dummy import DummyRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
+from sklearn.linear_model import Lasso, Ridge
+from sklearn.metrics import mean_absolute_error
 
 
 NOTEBOOK = Path(__file__).resolve().parents[1] / "main.ipynb"
@@ -92,6 +101,44 @@ class FeatureComparisonTests(unittest.TestCase):
         self.options["feature_sets"] = [["first"], []]
         with contextlib.redirect_stdout(io.StringIO()), self.assertRaises(ValueError):
             self.compare(**self.options)
+
+
+class RankingExperimentTests(unittest.TestCase):
+    def test_variants_run_and_write_separate_result_files(self):
+        notebook = json.loads(NOTEBOOK.read_text(encoding="utf-8"))
+        cell = next(cell for cell in notebook["cells"] if cell.get("id") == "compare-feature-sets-a")
+        data = pd.read_csv(NOTEBOOK.parent / "processed/team_season.csv")
+        data = data[data["year"].between(1995, 1998)]
+        with tempfile.TemporaryDirectory() as temp_dir:
+            namespace = {
+                "Path": lambda path: Path(temp_dir) / path,
+                "pd": SimpleNamespace(read_csv=lambda path: data.copy()),
+                "xgb": xgb,
+                "lgb": lgb,
+                "CatBoostRegressor": CatBoostRegressor,
+                "RandomForestRegressor": RandomForestRegressor,
+                "Ridge": Ridge,
+                "Lasso": Lasso,
+                "compare_feature_sets": load_functions(),
+                "spearman_metric": lambda yt, yp, td: spearmanr(yt, yp).statistic,
+                "mae_metric": lambda yt, yp, td: mean_absolute_error(yt, yp),
+                "top_k_accuracy": lambda yt, yp, k: len(
+                    set(yt.nsmallest(k).index) & set(pd.Series(yp, index=yt.index).nsmallest(k).index)
+                ) / k,
+            }
+            with contextlib.redirect_stdout(io.StringIO()):
+                exec(compile("".join(cell["source"]), str(NOTEBOOK), "exec"), namespace)
+
+            folder = Path(temp_dir) / "results"
+            for name in ("xgboost", "lightgbm", "catboost", "random_forest", "ridge", "lasso"):
+                yearly = pd.read_csv(folder / f"{name}_feature_year_results.csv")
+                summary = pd.read_csv(folder / f"{name}_feature_summary.csv")
+                self.assertEqual(yearly["model"].nunique(), 3)
+                self.assertEqual(set(yearly["year"]), {1996, 1997, 1998})
+                self.assertEqual(set(yearly["evaluation"]), {"Spearman", "MAE", "Top-5"})
+                self.assertEqual(len(summary), 9)
+                self.assertTrue({"mean", "median", "std"}.issubset(summary.columns))
+            self.assertEqual(len(list(folder.glob("*.csv"))), 12)
 
 
 if __name__ == "__main__":

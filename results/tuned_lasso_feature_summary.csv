@@ -1,0 +1,25 @@
+feature_set,features,model,kind,evaluation,mean,median,std
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.001_selectioncyclic,model,Spearman,0.5599808705046522,0.5670354543042263,0.11925125227893867
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.001_selectioncyclic,model,MAE,5.745879116567631,5.847906814114155,0.7236390779151253
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.001_selectioncyclic,model,Top-5,0.49230769230769234,0.6,0.13204505835470493
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.001_selectionrandom,model,Spearman,0.5606030503000115,0.5670354543042263,0.11864220874779341
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.001_selectionrandom,model,MAE,5.745572334549962,5.848143350219228,0.7227480189467443
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.001_selectionrandom,model,Top-5,0.49230769230769234,0.6,0.13204505835470493
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.01_selectioncyclic,model,Spearman,0.5593250912062467,0.5685956933687427,0.1196485843555651
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.01_selectioncyclic,model,MAE,5.752964855522899,5.885092462062526,0.7002819952934336
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.01_selectioncyclic,model,Top-5,0.47692307692307695,0.4,0.13008872711759817
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.01_selectionrandom,model,Spearman,0.5596408350217348,0.5685956933687427,0.1192218107647817
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.01_selectionrandom,model,MAE,5.75229321827755,5.8841398650053245,0.7006469566064546
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Lasso_alpha0.01_selectionrandom,model,Top-5,0.47692307692307695,0.4,0.13008872711759817
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.001_selectioncyclic,model,Spearman,0.5593723388439756,0.5670354543042263,0.12259652601269078
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.001_selectioncyclic,model,MAE,5.745034261505281,5.8425543184681015,0.6962126462432005
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.001_selectioncyclic,model,Top-5,0.5076923076923078,0.6,0.15525000516123696
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.001_selectionrandom,model,Spearman,0.5592695347883163,0.5670354543042263,0.12251597954485965
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.001_selectionrandom,model,MAE,5.7448680603792175,5.842565292328256,0.6963884781866947
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.001_selectionrandom,model,Top-5,0.5076923076923078,0.6,0.15525000516123696
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.01_selectioncyclic,model,Spearman,0.5590251326444466,0.5685956933687427,0.11913953927403727
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.01_selectioncyclic,model,MAE,5.747646598848468,5.865616587035858,0.6769352873724548
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.01_selectioncyclic,model,Top-5,0.47692307692307695,0.4,0.13008872711759817
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.01_selectionrandom,model,Spearman,0.5590251326444466,0.5685956933687427,0.11913953927403727
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.01_selectionrandom,model,MAE,5.747227444687125,5.865517784462193,0.6768670375877474
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Lasso_alpha0.01_selectionrandom,model,Top-5,0.47692307692307695,0.4,0.13008872711759817

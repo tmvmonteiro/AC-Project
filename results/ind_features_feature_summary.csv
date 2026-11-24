@@ -1,0 +1,7 @@
+feature_set,features,model,kind,evaluation,mean,median,std
+1,"('pts_pct_wavg2',)",RandomForest_leaf,model,Spearman,0.5394948709677316,0.5498387837809022,0.1341542833376007
+2,"('gd_pg_lag1',)",RandomForest_leaf,model,Spearman,0.5350091089122333,0.5217795512811388,0.1255422281282939
+3,"('ga_pg_lag1',)",RandomForest_leaf,model,Spearman,0.42880143816096916,0.4543074773280618,0.12207769752952312
+4,"('pim_pg_lag1',)",RandomForest_leaf,model,Spearman,0.08019875671187862,0.08276633867127951,0.1034319337432968
+5,"('pts_pct_wavg2', 'gd_pg_lag1')",RandomForest_leaf,model,Spearman,0.5459805497415153,0.5521906543087433,0.13385761665682824
+6,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",RandomForest_leaf,model,Spearman,0.5509173081723492,0.5211584523133652,0.12421964049373027

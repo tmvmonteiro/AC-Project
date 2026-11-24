@@ -1,0 +1,6 @@
+feature_set,features,model,kind,evaluation,mean,median,std
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Lasso_alpha0.001_selectioncyclic,model,Spearman,0.5539592661456988,0.568149910778881,0.1323540025900425
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Lasso_alpha0.001_selectionrandom,model,Spearman,0.5538088677416729,0.568149910778881,0.1318418069800098
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Lasso_alpha0.01_selectioncyclic,model,Spearman,0.5518895872701803,0.5670354543042263,0.13109097604832692
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Lasso_alpha0.01_selectionrandom,model,Spearman,0.5523348233445413,0.5670354543042263,0.13088268604864936
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Persistence,baseline,Spearman,0.5299486050313228,0.5153493258506601,0.09466933682813755

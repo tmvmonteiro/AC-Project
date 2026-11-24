@@ -1,0 +1,11 @@
+feature_set,features,model,kind,evaluation,mean,median,std
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha0.01_solverauto,model,Spearman,0.5538458668246379,0.568149910778881,0.13164282154843132
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha0.01_solversvd,model,Spearman,0.5538458668246379,0.568149910778881,0.13164282154843132
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha0.01_solvercholesky,model,Spearman,0.5538458668246379,0.568149910778881,0.13164282154843132
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha0.1_solverauto,model,Spearman,0.5482364913793785,0.5481466653680453,0.127753495359963
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha0.1_solversvd,model,Spearman,0.5482364913793785,0.5481466653680453,0.127753495359963
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha0.1_solvercholesky,model,Spearman,0.5482364913793785,0.5481466653680453,0.127753495359963
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha1.0_solverauto,model,Spearman,0.5527315045268254,0.5637316639772099,0.12289181086078908
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha1.0_solversvd,model,Spearman,0.5527315045268254,0.5637316639772099,0.12289181086078908
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Ridge_alpha1.0_solvercholesky,model,Spearman,0.5527315045268254,0.5637316639772099,0.12289181086078908
+1,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1', 'pim_pg_lag1')",Persistence,baseline,Spearman,0.5299486050313228,0.5153493258506601,0.09466933682813755

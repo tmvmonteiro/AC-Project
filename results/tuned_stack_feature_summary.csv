@@ -1,0 +1,7 @@
+feature_set,features,model,kind,evaluation,mean,median,std
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Stacking_Regressor,model,Spearman,0.45051578862630753,0.4835588077169736,0.2176763801323996
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Stacking_Regressor,model,MAE,6.197783386458313,6.021888313413718,0.8084039270437201
+1,"('pts_pct_wavg2', 'gd_pg_lag1')",Stacking_Regressor,model,Top-5,0.4153846153846154,0.4,0.17246329970051524
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Stacking_Regressor,model,Spearman,0.49177163902929366,0.48166808834568914,0.1553150864799891
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Stacking_Regressor,model,MAE,6.19142830127664,6.302911698932035,0.4991609606583911
+2,"('pts_pct_wavg2', 'gd_pg_lag1', 'ga_pg_lag1')",Stacking_Regressor,model,Top-5,0.44615384615384623,0.4,0.11982893790305561
